@@ -5,6 +5,11 @@ module.exports = {
   mode: 'development',
   entry: './src/index.tsx',
   devtool: 'inline-source-map',
+  devServer: {
+    proxy: {
+      '/data': 'http://localhost:3000',
+    },
+  },
   output: {
     path: path.resolve(__dirname, 'static'),
     filename: 'bundle.js',

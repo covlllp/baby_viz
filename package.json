@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "server": "node ./server",
+    "seed": "node ./seed.js"
   },
   "repository": "https://github.com/covlllp/baby_viz.git",
   "author": "Colin VanLang <colinvanlang@gmail.com>",
@@ -16,7 +18,9 @@
     "@typescript-eslint/eslint-plugin": "^2.3.1",
     "@typescript-eslint/parser": "^2.3.1",
     "css-loader": "^3.2.0",
+    "csv-parser": "^2.3.2",
     "eslint-config-prettier": "^6.3.0",
+    "express": "^4.17.1",
     "lodash": "^4.17.15",
     "prettier": "^1.18.2",
     "react": "^16.10.1",
@@ -24,8 +28,12 @@
     "react-redux": "^7.1.1",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
+    "sequelize": "^5.21.3",
+    "sequelize-cli": "^5.5.1",
+    "sqlite3": "^4.1.1",
     "style-loader": "^1.0.0",
     "ts-loader": "^6.1.2",
+    "ts-node": "^8.5.4",
     "typed-css-modules-webpack-plugin": "^0.1.2",
     "typescript": "^3.6.3",
     "webpack": "^4.41.0",

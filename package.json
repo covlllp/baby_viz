@@ -5,6 +5,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "server": "node ./server",
+    "server-dev": "nodemon ./server",
     "seed": "node ./seed.js"
   },
   "repository": "https://github.com/covlllp/baby_viz.git",
@@ -15,6 +16,8 @@
     "@types/react": "^16.9.3",
     "@types/react-dom": "^16.9.1",
     "@types/react-redux": "^7.1.4",
+    "@types/redux-actions": "^2.6.1",
+    "@types/redux-thunk": "^2.1.0",
     "@typescript-eslint/eslint-plugin": "^2.3.1",
     "@typescript-eslint/parser": "^2.3.1",
     "css-loader": "^3.2.0",
@@ -27,7 +30,9 @@
     "react-dom": "^16.10.1",
     "react-redux": "^7.1.1",
     "redux": "^4.0.4",
+    "redux-actions": "^2.6.5",
     "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
     "sequelize": "^5.21.3",
     "sequelize-cli": "^5.5.1",
     "sqlite3": "^4.1.1",
@@ -49,6 +54,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-hooks": "^1.7.0"
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "nodemon": "^2.0.2"
   }
 }

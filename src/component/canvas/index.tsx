@@ -32,10 +32,24 @@ export class Canvas extends React.PureComponent<CanvasProps, {}> {
     if (!canvas) return;
     const context = canvas.getContext('2d');
     if (!context) return;
+    canvas.height = canvas.offsetHeight;
+    canvas.width = canvas.offsetWidth;
     drawCanvas(canvas, context);
   }
 
   render() {
-    return <canvas className={styles.canvas} ref={this.canvas} />;
+    return (
+      <canvas
+        className={styles.canvas}
+        ref={this.canvas}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+        }}
+      />
+    );
   }
 }

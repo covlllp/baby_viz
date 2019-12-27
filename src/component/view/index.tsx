@@ -7,29 +7,39 @@ import { Painter } from 'lib/painter';
 import * as styles from './styles.css';
 
 interface ViewProps {
-  days: { [key: string]: Event[] };
+  birthDate: Date;
+  sleepEvents: Event[];
 }
 
 export class View extends React.Component<ViewProps, {}> {
   painter: Painter;
+  canvas: HTMLCanvasElement;
+  canvasContext: CanvasRenderingContext2D;
 
   constructor(props: ViewProps) {
     super(props);
-    // this.painter = new Painter();
+    this.painter = new Painter({
+      birthDate: props.birthDate,
+    });
     this.drawCanvas = this.drawCanvas.bind(this);
+  }
+
+  componentDidUpdate() {
+    this.drawCanvas(this.canvas, this.canvasContext);
   }
 
   private drawCanvas(
     canvas: HTMLCanvasElement,
     context: CanvasRenderingContext2D,
   ): void {
-    // this.painter.setDimensions(canvas);
-    //
-    // this.painter.paintBoard({
-    //   canvas,
-    //   context,
-    //   board: this.props.board,
-    // });
+    this.canvasContext = context;
+    this.canvas = canvas;
+    this.painter.setDimensions(canvas);
+
+    this.painter.paintEvents({
+      context: this.canvasContext,
+      events: this.props.sleepEvents,
+    });
   }
 
   render() {

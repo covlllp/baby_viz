@@ -5,9 +5,10 @@ import { View } from 'component/view';
 import { getDays } from 'data/selector';
 import { Event, StoreShape } from 'data/types';
 import { fetchDays } from 'data/actions';
+import { BIRTH_DATE } from 'data/constants';
 
 interface AppProps {
-  days: { [key: string]: Event[] };
+  sleepEvents: Event[];
   fetchDays(): void;
 }
 
@@ -16,13 +17,13 @@ class App extends React.Component<AppProps, {}> {
     this.props.fetchDays();
   }
   render() {
-    return <View days={this.props.days} />;
+    return <View sleepEvents={this.props.sleepEvents} birthDate={BIRTH_DATE} />;
   }
 }
 
 const ConnectedApp = connect(
   (state: StoreShape) => ({
-    days: getDays(state),
+    sleepEvents: getDays(state),
   }),
   { fetchDays },
 )(App);

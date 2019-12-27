@@ -1,6 +1,8 @@
 const express = require('express');
 const db = require('./../models');
 
+const { splitEvent, serializeEvent } = require('./util');
+
 const { Op } = db.Sequelize;
 
 const app = express();
@@ -24,8 +26,13 @@ app.get('/data/days', (req, res) => {
     order: [['start', 'DESC']],
   })
     .then(events => {
-      console.log(events.length);
-      res.json(events);
+      const cleanEvents = [];
+      events.forEach(event => {
+        splitEvent(event).forEach(e => {
+          cleanEvents.push(serializeEvent(e));
+        });
+      });
+      res.json(cleanEvents);
     })
     .catch(err => {
       console.error(err);

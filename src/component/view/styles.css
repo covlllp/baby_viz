@@ -11,7 +11,7 @@
 
 .board {
   position: relative;
-  background-color: gray;
+  background-color: lightgray;
   height: 600px;
-  width: 300px;
+  width: 600px;
 }

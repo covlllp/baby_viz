@@ -5,21 +5,14 @@ interface ServerEvent {
   start: string;
   end: string;
   activity: string;
-  duration: number;
-  quantity: number;
 }
 
-function deserializeDays(res: ServerEvent[]): { [key: string]: Event[] } {
-  const date = new Date('2019-11-01').toISOString();
-  console.log(res);
-  const result: { [key: string]: Event[] } = {};
-  result[date] = res.map(event => ({
+function deserializeDays(res: ServerEvent[]): Event[] {
+  return res.map(event => ({
     start: new Date(event.start),
     end: new Date(event.end),
-    activity: event.activity as Activity,
-    duration: event.duration,
+    activity: (<any>Activity)[event.activity],
   }));
-  return result;
 }
 
 export function fetchDays() {

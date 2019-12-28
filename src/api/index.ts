@@ -1,4 +1,4 @@
-import { DAY_URL } from 'api/constants';
+import { eventsUrl, eventRangeUrl } from 'api/constants';
 import { Event, Activity } from 'data/types';
 
 interface ServerEvent {
@@ -7,7 +7,7 @@ interface ServerEvent {
   activity: string;
 }
 
-function deserializeDays(res: ServerEvent[]): Event[] {
+function deserializeEvents(res: ServerEvent[]): Event[] {
   return res.map(event => ({
     start: new Date(event.start),
     end: new Date(event.end),
@@ -15,8 +15,14 @@ function deserializeDays(res: ServerEvent[]): Event[] {
   }));
 }
 
-export function fetchDays() {
-  return fetch(DAY_URL)
+export function fetchEvents(date: Date, activity: Activity) {
+  return fetch(eventsUrl(date, activity))
     .then(res => res.json())
-    .then(res => deserializeDays(res));
+    .then(res => deserializeEvents(res));
+}
+
+export function fetchEventRange(start: Date, end: Date, activity: Activity) {
+  return fetch(eventRangeUrl(start, end, activity))
+    .then(res => res.json())
+    .then(res => deserializeEvents(res));
 }

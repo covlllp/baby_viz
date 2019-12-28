@@ -1,3 +1,6 @@
+const db = require('./../models');
+const { Op } = db.Sequelize;
+
 function csvToDate(ts) {
   return new Date(`${ts}Z`);
 }
@@ -38,8 +41,36 @@ function addMinutes(time, minutes) {
   return new Date(time.getTime() + minutes * 60000);
 }
 
+function queryForEvents({ activity, startDate, endDate }) {
+  const day = {
+    [Op.and]: {
+      [Op.gte]: startDate.toUTCString(),
+      [Op.lt]: endDate.toUTCString(),
+    },
+  };
+
+  return db.Event.findAll({
+    where: {
+      [Op.or]: {
+        start: day,
+        end: day,
+      },
+      activity,
+    },
+    order: [['start', 'DESC']],
+  }).then(events => {
+    const cleanEvents = [];
+    events.forEach(event => {
+      splitEvent(event).forEach(e => {
+        cleanEvents.push(serializeEvent(e));
+      });
+    });
+    return cleanEvents;
+  });
+}
+
 module.exports = {
+  addMinutes,
   csvToDate,
-  serializeEvent,
-  splitEvent,
+  queryForEvents,
 };

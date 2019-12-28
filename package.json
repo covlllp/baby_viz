@@ -8,6 +8,9 @@
     "server-dev": "nodemon ./server",
     "seed": "node ./seed.js"
   },
+  "nodemonConfig": {
+    "watch": ["server/"]
+  },
   "repository": "https://github.com/covlllp/baby_viz.git",
   "author": "Colin VanLang <colinvanlang@gmail.com>",
   "license": "MIT",

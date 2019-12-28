@@ -1,4 +1,6 @@
 import { Event } from 'data/types';
+import { LINE_THICKNESS, DEFAULT_COLOR, COLOR_MAP } from 'data/constants';
+import * as DateUtil from 'lib/date';
 
 interface PaintOptions {
   events: Event[];
@@ -45,36 +47,23 @@ export class Painter {
 
   paintEvents({ events, context }: PaintOptions): void {
     this.context = context;
+    context.clearRect(0, 0, this.width, this.height);
     events.forEach(event => {
       this.paintEvent(event);
     });
   }
 
   private paintEvent(event: Event): void {
-    const startAngle = this.getAngleFromTime(event.start);
-    const endAngle = this.getAngleFromTime(event.end);
+    const startAngle = DateUtil.getAngleFromTime(event.start) - Math.PI / 2;
+    const endAngle = DateUtil.getAngleFromTime(event.end) - Math.PI / 2;
+    const radius = this.daysSinceBirth(event.start) * LINE_THICKNESS;
+    this.context.strokeStyle = COLOR_MAP[event.activity] || DEFAULT_COLOR;
     this.context.beginPath();
-    this.context.arc(this.centerX, this.centerY, 100, startAngle, endAngle);
+    this.context.arc(this.centerX, this.centerY, radius, startAngle, endAngle);
     this.context.stroke();
   }
 
-  private getMidnight(time: Date): Date {
-    const midnight = new Date(time.getTime());
-    midnight.setUTCHours(0, 0, 0, 0);
-    return midnight;
-  }
-
-  private getAngleFromTime(time: Date): number {
-    const midnight = this.getMidnight(time);
-    const timeDiff = this.getTimeDifference(time, midnight);
-    return this.convertToAngle(timeDiff);
-  }
-
-  private getTimeDifference(timeA: Date, timeB: Date): number {
-    return Math.abs(timeA.getTime() - timeB.getTime());
-  }
-
-  private convertToAngle(ms: number): number {
-    return (ms / (24 * 60 * 60 * 1000)) * 2 * Math.PI;
+  private daysSinceBirth(date: Date) {
+    return DateUtil.daysDifference(this.birthDate, date);
   }
 }

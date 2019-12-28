@@ -1,38 +1,39 @@
 const express = require('express');
 const db = require('./../models');
 
-const { splitEvent, serializeEvent } = require('./util');
-
-const { Op } = db.Sequelize;
+const { queryForEvents, addMinutes } = require('./util');
 
 const app = express();
 
-app.get('/data/days', (req, res) => {
-  const day = {
-    [Op.and]: {
-      [Op.gte]: '2019-11-01',
-      [Op.lt]: '2019-11-02',
-    },
-  };
+app.get('/data/events/:date/:activity', (req, res) => {
+  const date = new Date(parseInt(req.params.date, 10));
+  date.setUTCHours(0, 0, 0, 0);
 
-  db.Event.findAll({
-    where: {
-      [Op.or]: {
-        start: day,
-        end: day,
-      },
-      activity: 'Sleep',
-    },
-    order: [['start', 'DESC']],
+  queryForEvents({
+    activity: req.params.activity,
+    startDate: date,
+    endDate: addMinutes(date, 24 * 60),
   })
     .then(events => {
-      const cleanEvents = [];
-      events.forEach(event => {
-        splitEvent(event).forEach(e => {
-          cleanEvents.push(serializeEvent(e));
-        });
-      });
-      res.json(cleanEvents);
+      res.json(events);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(404).json(err);
+    });
+});
+
+app.get('/data/range/events/:start/:end/:activity', (req, res) => {
+  const start = new Date(parseInt(req.params.start, 10));
+  const end = new Date(parseInt(req.params.end, 10));
+
+  queryForEvents({
+    activity: req.params.activity,
+    startDate: start,
+    endDate: end,
+  })
+    .then(events => {
+      res.json(events);
     })
     .catch(err => {
       console.error(err);

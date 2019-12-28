@@ -1,5 +1,10 @@
 import { Event } from 'data/types';
-import { LINE_THICKNESS, DEFAULT_COLOR, COLOR_MAP } from 'data/constants';
+import {
+  LINE_THICKNESS,
+  DEFAULT_COLOR,
+  COLOR_MAP,
+  BACKGROUND_COLOR,
+} from 'data/constants';
 import * as DateUtil from 'lib/date';
 
 interface PaintOptions {
@@ -47,7 +52,12 @@ export class Painter {
 
   paintEvents({ events, context }: PaintOptions): void {
     this.context = context;
-    context.clearRect(0, 0, this.width, this.height);
+    if (BACKGROUND_COLOR) {
+      context.fillStyle = BACKGROUND_COLOR;
+      context.fillRect(0, 0, this.width, this.height);
+    } else {
+      context.clearRect(0, 0, this.width, this.height);
+    }
     events.forEach(event => {
       this.paintEvent(event);
     });

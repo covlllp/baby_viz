@@ -2,16 +2,17 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { View } from 'component/view';
-import { getDays } from 'data/selector';
-import { Activity, Event, StoreShape } from 'data/types';
-import { fetchEvents, fetchEventRange } from 'data/actions';
+import { getEvents, getVizType } from 'data/selector';
+import { Activity, Event, StoreShape, VizType } from 'data/types';
+import { changeVizType, fetchEvents, fetchEventRange } from 'data/actions';
 import { BIRTH_DATE } from 'data/constants';
-// import { getDateSinceDay } from 'lib/date';
 
 interface AppProps {
-  sleepEvents: Event[];
+  events: Event[];
+  vizType: VizType;
   fetchEvents(date: Date, activity: Activity): void;
   fetchEventRange(start: Date, end: Date, activity: Activity): void;
+  changeVizType(vizType: VizType): void;
 }
 
 class App extends React.Component<AppProps, {}> {
@@ -21,15 +22,23 @@ class App extends React.Component<AppProps, {}> {
     this.props.fetchEventRange(BIRTH_DATE, new Date(), Activity.Nursing);
   }
   render() {
-    return <View sleepEvents={this.props.sleepEvents} birthDate={BIRTH_DATE} />;
+    return (
+      <View
+        events={this.props.events}
+        birthDate={BIRTH_DATE}
+        vizType={this.props.vizType}
+        changeVizType={this.props.changeVizType}
+      />
+    );
   }
 }
 
 const ConnectedApp = connect(
   (state: StoreShape) => ({
-    sleepEvents: getDays(state),
+    events: getEvents(state),
+    vizType: getVizType(state),
   }),
-  { fetchEvents, fetchEventRange },
+  { fetchEvents, fetchEventRange, changeVizType },
 )(App);
 
 export { ConnectedApp as App };

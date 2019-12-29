@@ -1,8 +1,11 @@
 import * as React from 'react';
 
 import { CanvasViz } from 'component/canvas_viz';
+import { SvgViz } from 'component/svg_viz';
 import { VizSelector } from 'component/viz_selector';
 import { Event, VizType } from 'data/types';
+
+import { VIEW_DIMENSION } from 'data/constants';
 
 import * as styles from './styles.css';
 
@@ -16,7 +19,11 @@ interface ViewProps {
 export const View: React.SFC<ViewProps> = props => (
   <div className={styles.container}>
     <div className={styles.board}>
-      {props.vizType === VizType.Canvas ? <CanvasViz {...props} /> : null}
+      {props.vizType === VizType.Canvas ? (
+        <CanvasViz {...props} />
+      ) : (
+        <SvgViz {...props} dimension={VIEW_DIMENSION} />
+      )}
     </div>
     <div className={styles.vizSelector}>
       <VizSelector

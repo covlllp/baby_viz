@@ -17,6 +17,7 @@ interface AppProps {
 
 class App extends React.Component<AppProps, {}> {
   componentDidMount() {
+    // this.props.fetchEvents(new Date('2019-11-1'), Activity.Sleep);
     this.props.fetchEventRange(BIRTH_DATE, new Date(), Activity.Sleep);
     this.props.fetchEventRange(BIRTH_DATE, new Date(), Activity.Bottle);
     this.props.fetchEventRange(BIRTH_DATE, new Date(), Activity.Nursing);

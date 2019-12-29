@@ -1,10 +1,5 @@
 import { Event } from 'data/types';
-import {
-  LINE_THICKNESS,
-  DEFAULT_COLOR,
-  COLOR_MAP,
-  BACKGROUND_COLOR,
-} from 'data/constants';
+import { DEFAULT_COLOR, COLOR_MAP, BACKGROUND_COLOR } from 'data/constants';
 import * as DateUtil from 'lib/date';
 
 interface PaintOptions {
@@ -66,14 +61,14 @@ export class Painter {
   private paintEvent(event: Event): void {
     const startAngle = DateUtil.getAngleFromTime(event.start) - Math.PI / 2;
     const endAngle = DateUtil.getAngleFromTime(event.end) - Math.PI / 2;
-    const radius = this.daysSinceBirth(event.start) * LINE_THICKNESS;
+    const radius = this.getRadius(event.start);
     this.context.strokeStyle = COLOR_MAP[event.activity] || DEFAULT_COLOR;
     this.context.beginPath();
     this.context.arc(this.centerX, this.centerY, radius, startAngle, endAngle);
     this.context.stroke();
   }
 
-  private daysSinceBirth(date: Date) {
-    return DateUtil.daysDifference(this.birthDate, date);
+  private getRadius(date: Date) {
+    return DateUtil.radiusFromDates(this.birthDate, date);
   }
 }

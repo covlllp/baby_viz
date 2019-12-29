@@ -1,3 +1,5 @@
+import { LINE_THICKNESS } from 'data/constants';
+
 export function getAngleFromTime(time: Date) {
   const midnight = getMidnight(time);
   const diff = getTimeDifference(time, midnight);
@@ -24,4 +26,8 @@ function getMidnight(time: Date): Date {
 
 export function getDateSinceDay(date: Date, days: number): Date {
   return new Date(date.getTime() + days * 1000 * 60 * 60 * 24);
+}
+
+export function radiusFromDates(dateA: Date, dateB: Date) {
+  return daysDifference(dateA, dateB) * LINE_THICKNESS;
 }

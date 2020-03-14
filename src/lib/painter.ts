@@ -1,5 +1,10 @@
 import { Event } from 'data/types';
-import { DEFAULT_COLOR, COLOR_MAP, BACKGROUND_COLOR } from 'data/constants';
+import {
+  DEFAULT_COLOR,
+  COLOR_MAP,
+  BACKGROUND_COLOR,
+  LINE_THICKNESS,
+} from 'data/constants';
 import * as DateUtil from 'lib/date';
 
 interface PaintOptions {
@@ -63,6 +68,7 @@ export class Painter {
     const endAngle = DateUtil.getAngleFromTime(event.end) - Math.PI / 2;
     const radius = this.getRadius(event.start);
     this.context.strokeStyle = COLOR_MAP[event.activity] || DEFAULT_COLOR;
+    this.context.lineWidth = LINE_THICKNESS;
     this.context.beginPath();
     this.context.arc(this.centerX, this.centerY, radius, startAngle, endAngle);
     this.context.stroke();

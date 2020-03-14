@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Event } from 'data/types';
-import { COLOR_MAP } from 'data/constants';
+import { COLOR_MAP, LINE_THICKNESS } from 'data/constants';
 import * as DateUtil from 'lib/date';
 import * as MathUtil from 'lib/math';
 
@@ -63,6 +63,7 @@ const EventArc: React.SFC<EventArcProps> = props => {
     <path
       d={pathString}
       stroke={color}
+      strokeWidth={LINE_THICKNESS}
       fill="none"
       transform={transformString}
     />

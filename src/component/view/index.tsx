@@ -5,7 +5,7 @@ import { SvgViz } from 'component/svg_viz';
 import { VizSelector } from 'component/viz_selector';
 import { Event, VizType } from 'data/types';
 
-import { VIEW_DIMENSION } from 'data/constants';
+import { VIEW_DIMENSION, BACKGROUND_COLOR } from 'data/constants';
 
 import * as styles from './styles.css';
 
@@ -17,7 +17,10 @@ interface ViewProps {
 }
 
 export const View: React.SFC<ViewProps> = props => (
-  <div className={styles.container}>
+  <div
+    className={styles.container}
+    style={{ backgroundColor: BACKGROUND_COLOR }}
+  >
     <div className={styles.board}>
       {props.vizType === VizType.Canvas ? (
         <CanvasViz {...props} />

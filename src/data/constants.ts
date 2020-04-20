@@ -1,5 +1,7 @@
 import { Activity } from 'data/types';
 
+export const END_DATE = new Date();
+
 export const BIRTH_DATE = new Date('2019-10-23');
 
 export const LINE_SPACING = 1.9;

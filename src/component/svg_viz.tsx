@@ -23,7 +23,11 @@ export class SvgViz extends React.Component<SvgVizProps, {}> {
   render() {
     const { dimension, events } = this.props;
     return (
-      <svg viewBox={`0 0 ${dimension} ${dimension}`}>
+      <svg
+        viewBox={`0 0 ${dimension} ${dimension}`}
+        xmlns="http://www.w3.org/2000/svg"
+        xmlnsXlink="http://www.w3.org/1999/xlink"
+      >
         {events.map(event => (
           <EventArc
             key={`${
